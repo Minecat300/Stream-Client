@@ -1,4 +1,4 @@
-const server = "http://flameys.ddns.net:8080";
+const server = "https://flameys.ddns.net:8080";
 
 async function sendData(data) {
     const userData = data;
