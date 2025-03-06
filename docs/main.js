@@ -3,16 +3,16 @@ let sessionId;
 const loadingDiv = document.getElementById("loading");
 const mainDiv = document.getElementById("main");
 const adminPasswordDiv = document.getElementById("adminPassword");
+const adminMainDiv = document.getElementById("adminMain");
 
 (async () => {
     try {
         await pingServer();
     } catch (err) {
-        document.writeln("<h1>500 Failed to reach server</h1>");
+        document.writeln(`<h1 style="font-family:'Comic Sans MS'">500 Failed to reach server</h1>`);
         console.error(err);
         return;
     }
-    loadingDiv.style.display = "none";
 
     await startMain();
 })(); 
@@ -28,19 +28,22 @@ async function startMain() {
     
     const response = await sendData({sessionId: sessionId}, "sessionCheck");
     if (response.active) {
-        
+        loadingDiv.style.display = "none";
     } else {
-        document.writeln('<h1>Invalid session ID. please enter new:</h1><input type="text" id="input"><button type="button" onclick="window.open(window.location.pathname + `?id=` + document.getElementById(`input`).value, `_self`)">Submit</button>')
+        document.writeln(`<h1 style="font-family:'Comic Sans MS'">Invalid session ID. please enter new:</h1><input style="font-family:'Comic Sans MS'" type="text" id="input"><button style="font-family:'Comic Sans MS'" type="button" onclick="window.open(window.location.pathname + '?id=' + document.getElementById('input').value, '_self')">Submit</button>`)
         return;
     }
 }
 
 async function admin() {
+    loadingDiv.style.display = "none";
     adminPasswordDiv.style.display = "flex";
     await waitUntil(() => (sessionId != "admin"));
 
     setInterval(() => sendData({sessionId: sessionId}, "sessionPing"), 10000);
     loadingDiv.style.display = "none";
+    adminMainDiv.style.display = "flex";
+
 }
 
 async function checkPassword(password, newSessionId) {
@@ -60,6 +63,45 @@ async function checkPassword(password, newSessionId) {
         loadingDiv.style.display = "none";
         adminPasswordDiv.style.display = "flex";
     }
+}
+
+async function doButton(num) {
+    if (num == 1) {
+        await sendData({ page: "setup", sessionId: sessionId }, "page");
+    }
+    if (num == 2) {
+        await sendData({ page: "questionStart", sessionId: sessionId }, "page");
+    }
+    if (num == 3) {
+        await sendData({ page: "questionEnd", sessionId: sessionId }, "page");
+    }
+    if (num == 4) {
+        const respone = await sendData({ request: "getQuestionData", sessionId: sessionId }, "action");
+        console.log(getRandomAnswer(respone.awnsers));
+    }
+    if (num == 5) {
+        await sendData({ request: "resetQuestionData", sessionId: sessionId }, "action");
+    }
+}
+
+function randomNumber(min, max) {
+    return Math.min(Math.floor(Math.random()*(max-min+1))+min, max);
+}
+
+function getRandomAnswer(data) {
+    let frequencyMap = new Map();
+    data.forEach(item => {
+        frequencyMap.set(item, (frequencyMap.get(item) || 0) + 1);
+    });
+
+    let uniqueItems = [...frequencyMap.keys()].sort((a, b) => frequencyMap.get(b) - frequencyMap.get(a));
+
+    for (let i = 0; i < uniqueItems.length; i++) {
+        const randomIndex = randomNumber(i, uniqueItems.length - 1);
+        [uniqueItems[i], uniqueItems[randomIndex]] = [uniqueItems[randomIndex], uniqueItems[i]];
+    }
+
+    return uniqueItems;
 }
 
 document.addEventListener("DOMContentLoaded", function () {
