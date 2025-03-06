@@ -9,9 +9,29 @@
     <script src="networking.js"></script>
 </head>
 <body>
-    <div class="main">
+    <div id="adminPassword">
+        <h3>Enter Admin password and session ID:</h3>
+        <div>
+            <p>session ID: </p>
+            <input type="text" id="sesstionIdInput">
+        </div>
+        <div>
+            <p>password: </p>
+            <input type="password" id="adminInput">
+        </div>
+        <button type="button" onclick="checkPassword(document.getElementById('adminInput').value, document.getElementById('sesstionIdInput').value)">Submit</button>
+
+    </div>
+
+    <div id="loading">
+        <img draggable="false" ondragstart="return false;" src="https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExejAyZGFvMDJnNXVleHcwbGduZW93bTNrcWppcHZ6Z3NoYTRrMTZidSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/fLsqdVcQb6UxXOrGam/giphy.gif" alt="">
+    </div>
+
+    <div id="main">
         <input type="text" id="input">
         <button type="button" onclick="sendData(document.getElementById('input').value)">Submit</button>
     </div>
+
+    <script src="main.js"></script>
 </body>
 </html>
