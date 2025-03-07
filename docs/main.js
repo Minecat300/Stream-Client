@@ -1,4 +1,5 @@
 let sessionId;
+let page = "setup";
 
 const loadingDiv = document.getElementById("loading");
 const mainDiv = document.getElementById("main");
@@ -32,6 +33,27 @@ async function startMain() {
     } else {
         document.writeln(`<h1 style="font-family:'Comic Sans MS'">Invalid session ID. please enter new:</h1><input style="font-family:'Comic Sans MS'" type="text" id="input"><button style="font-family:'Comic Sans MS'" type="button" onclick="window.open(window.location.pathname + '?id=' + document.getElementById('input').value, '_self')">Submit</button>`)
         return;
+    }
+    document.getElementById(page).style.display = "flex";
+    setInterval(updatePage, 1000);
+}
+
+async function updatePage() {
+    const prevPage = page;
+    const response = await sendData({sessionId: sessionId}, "pagePing");
+    page = response.page;
+    if (page != prevPage) {
+        document.getElementById(prevPage).style.display = "none";
+        document.getElementById(page).style.display = "flex";
+        if (page == "setup") {
+
+        }
+        if (page == "questionStart") {
+
+        }
+        if (page == "questionEnd") {
+
+        }
     }
 }
 

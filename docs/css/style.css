@@ -36,3 +36,23 @@ body {
     align-items: center;
     height: 100vh;
 }
+
+#setup {
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+#setup img {
+    height: 100px;
+}
+
+#questionStart {
+    display: none;
+}
+
+#questionEnd {
+    display: none;
+}
