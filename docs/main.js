@@ -5,6 +5,7 @@ const loadingDiv = document.getElementById("loading");
 const mainDiv = document.getElementById("main");
 const adminPasswordDiv = document.getElementById("adminPassword");
 const adminMainDiv = document.getElementById("adminMain");
+const questionFeedback = document.getElementById("questionFeedback");
 
 (async () => {
     try {
@@ -49,12 +50,35 @@ async function updatePage() {
 
         }
         if (page == "questionStart") {
-
+            while (page == "questionStart") {
+                await sleep(50);
+                const awnser = document.getElementById("questionInput").value;
+                if (awnser == "") {
+                    questionFeedback.innerHTML = "Input can not be empty";
+                    continue;
+                }
+                if (awnser.length > 30) {
+                    questionFeedback.innerHTML = "Input can not be more then 30 characters";
+                    continue;
+                }
+                questionFeedback.innerHTML = "";
+            }
         }
         if (page == "questionEnd") {
 
         }
     }
+}
+
+async function checkAndSubmit(awnser) {
+    if (awnser == "") {
+        return;
+    }
+    if (awnser.length > 30) {
+        return;
+    }
+    await sendData({ sessionId: sessionId, data: awnser }, "submit");
+
 }
 
 async function admin() {
@@ -125,6 +149,8 @@ function getRandomAnswer(data) {
 
     return uniqueItems;
 }
+
+const sleep = (delay) => new Promise((resolve) => setTimeout(resolve, delay));
 
 document.addEventListener("DOMContentLoaded", function () {
     document.querySelectorAll("img").forEach(img => {

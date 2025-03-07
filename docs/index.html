@@ -46,7 +46,14 @@
         <img src="https://cdn.pixabay.com/animation/2024/04/02/07/57/07-57-40-974_512.gif" alt="">
     </div>
     <div id="questionStart">
-
+        <h2>
+            Type what you want to be found in Wikipedia by our contestant
+        </h2>
+        <div style="flex-direction: row;">
+            <input type="text" id="questionInput">
+            <button type="button" onclick="checkAndSubmit(document.getElementById('questionInput').value)">Submit</button>
+        </div>
+        <p id="questionFeedback"></p>
     </div>
     <div id="questionEnd">
 

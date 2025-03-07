@@ -1,6 +1,6 @@
 body {
     margin: 0px;
-    font-family: 'Comic Sans MS', cursive;
+    font-family: 'ComicSans';
 }
 
 #main {
@@ -51,8 +51,17 @@ body {
 
 #questionStart {
     display: none;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
 }
 
 #questionEnd {
     display: none;
+}
+
+@font-face {
+    font-family: ComicSans;
+    src: url('fonts/Ldfcomicsans-jj7l.ttf');
 }
