@@ -43,7 +43,13 @@ async function startMain() {
 
 async function updatePage() {
     const prevPage = page;
-    const response = await sendData({sessionId: sessionId}, "pagePing");
+    try {
+        const response = await sendData({sessionId: sessionId}, "pagePing");
+    } catch (error) {
+        console.error(error);
+        sessionTimeoutError();
+        return;
+    }
     page = response.page;
     if (page == "questionEnd") {
         forceQuestionEnd = false;
@@ -86,7 +92,13 @@ async function checkAndSubmit(awnser) {
     if (awnser.length > 30) {
         return;
     }
-    await sendData({ sessionId: sessionId, data: awnser }, "submit");
+    try {
+        await sendData({ sessionId: sessionId, data: awnser }, "submit");
+    } catch (error) {
+        console.error(error);
+        sessionTimeoutError();
+        return;
+    }
     forceQuestionEnd = true;
     document.getElementById(page).style.display = "none";
     document.getElementById("questionEnd").style.display = "flex";
@@ -97,9 +109,22 @@ async function admin() {
     adminPasswordDiv.style.display = "flex";
     await waitUntil(() => (sessionId != "admin"));
 
-    setInterval(() => sendData({sessionId: sessionId}, "sessionPing"), 10000);
+    setInterval(adminSesstionCheck, 5000);
     loadingDiv.style.display = "none";
     adminMainDiv.style.display = "flex";
+
+}
+
+async function adminSesstionCheck() {
+    let response;
+    try {
+        response = await sendData({sessionId: sessionId}, "sessionPing");
+    } catch (error) {
+        console.error(error);
+        sessionTimeoutError();
+        return;
+    }
+    document.getElementById("responseValues").innerHTML = response.amount;
 
 }
 
@@ -170,6 +195,10 @@ function getRandomAnswer(data) {
     }
 
     return uniqueItems;
+}
+
+function sessionTimeoutError() {
+    mainBody.innerHTML = '<div style="display: flex; justify-content: center; align-items: center; height: 100vh;"><h1>404 Session Timeout</h1></div>';
 }
 
 const sleep = (delay) => new Promise((resolve) => setTimeout(resolve, delay));
