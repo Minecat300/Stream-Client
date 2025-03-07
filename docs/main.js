@@ -123,10 +123,21 @@ async function doButton(num) {
     }
     if (num == 4) {
         const respone = await sendData({ request: "getQuestionData", sessionId: sessionId }, "action");
-        console.log(getRandomAnswer(respone.awnsers));
+        const randList = getRandomAnswer(respone.response);
+        console.log(randList);
+        const list = document.getElementById("dynamicList");
+        list.innerHTML = "";
+
+        randList.forEach(item => {
+            const li = document.createElement("li");
+            li.textContent = item;
+            list.appendChild(li);
+        });
     }
     if (num == 5) {
         await sendData({ request: "resetQuestionData", sessionId: sessionId }, "action");
+        const list = document.getElementById("dynamicList");
+        list.innerHTML = "";
     }
 }
 

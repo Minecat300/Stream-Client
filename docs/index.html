@@ -10,11 +10,14 @@
 </head>
 <body>
     <div id="adminMain">
-        <button type="button" onclick="doButton(1)">Setup</button>
-        <button type="button" onclick="doButton(2)">Start Question</button>
-        <button type="button" onclick="doButton(3)">End Question</button>
-        <button type="button" onclick="doButton(4)">Get Awnsers</button>
-        <button type="button" onclick="doButton(5)">Reset Awnsers</button>
+        <div style="flex-direction: row;">
+            <button type="button" onclick="doButton(1)">Setup</button>
+            <button type="button" onclick="doButton(2)">Start Question</button>
+            <button type="button" onclick="doButton(3)">End Question</button>
+            <button type="button" onclick="doButton(4)">Get Awnsers</button>
+            <button type="button" onclick="doButton(5)">Reset Awnsers</button>
+        </div>
+        <ul id="dynamicList" class="styled-list"></ul>
     </div>
     <div id="adminPassword">
         <h3>Enter Admin password and session ID:</h3>
@@ -56,7 +59,10 @@
         <p id="questionFeedback"></p>
     </div>
     <div id="questionEnd">
-
+        <h1>
+            Wait for next Wikipedia round
+        </h1>
+        <img src="https://cdn.pixabay.com/animation/2024/04/02/07/57/07-57-40-974_512.gif" alt="">
     </div>
 
     <script src="main.js"></script>
