@@ -43,10 +43,8 @@ async function startMain() {
 
 async function updatePage() {
     const prevPage = page;
-    try {
-        const response = await sendData({sessionId: sessionId}, "pagePing");
-    } catch (error) {
-        console.error(error);
+    const response = await sendData({sessionId: sessionId}, "pagePing");
+    if (response.status != 200) {
         sessionTimeoutError();
         return;
     }
@@ -92,10 +90,9 @@ async function checkAndSubmit(awnser) {
     if (awnser.length > 30) {
         return;
     }
-    try {
-        await sendData({ sessionId: sessionId, data: awnser }, "submit");
-    } catch (error) {
-        console.error(error);
+
+    const response = await sendData({ sessionId: sessionId, data: awnser }, "submit");
+    if (response.status != 200) {
         sessionTimeoutError();
         return;
     }
@@ -116,16 +113,12 @@ async function admin() {
 }
 
 async function adminSesstionCheck() {
-    let response;
-    try {
-        response = await sendData({sessionId: sessionId}, "sessionPing");
-    } catch (error) {
-        console.error(error);
+    const response = await sendData({sessionId: sessionId}, "sessionPing");
+    if (response.status != 200) {
         sessionTimeoutError();
         return;
     }
-    document.getElementById("responseValues").innerHTML = response.amount;
-
+    document.getElementById("respondeValues").innerHTML = "Responses: " + response.amount;
 }
 
 async function checkPassword(password, newSessionId) {

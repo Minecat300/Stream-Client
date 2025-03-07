@@ -14,6 +14,7 @@ async function sendData(data, subUrl) {
     });
 
     const result = await response.json();
+    result.status = response.status;
     console.log(result);
     return result;
 }
