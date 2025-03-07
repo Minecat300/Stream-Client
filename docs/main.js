@@ -1,17 +1,19 @@
 let sessionId;
 let page = "setup";
+let forceQuestionEnd = false;
 
 const loadingDiv = document.getElementById("loading");
 const mainDiv = document.getElementById("main");
 const adminPasswordDiv = document.getElementById("adminPassword");
 const adminMainDiv = document.getElementById("adminMain");
 const questionFeedback = document.getElementById("questionFeedback");
+const mainBody = document.getElementById("mainBody");
 
 (async () => {
     try {
         await pingServer();
     } catch (err) {
-        document.writeln(`<h1 style="font-family:'Comic Sans MS'">500 Failed to reach server</h1>`);
+        mainBody.innerHTML = '<div style="display: flex; justify-content: center; align-items: center; height: 100vh;"><h1>500 Failed to reach server</h1></div>'
         console.error(err);
         return;
     }
@@ -32,7 +34,7 @@ async function startMain() {
     if (response.active) {
         loadingDiv.style.display = "none";
     } else {
-        document.writeln(`<h1 style="font-family:'Comic Sans MS'">Invalid session ID. please enter new:</h1><input style="font-family:'Comic Sans MS'" type="text" id="input"><button style="font-family:'Comic Sans MS'" type="button" onclick="window.open(window.location.pathname + '?id=' + document.getElementById('input').value, '_self')">Submit</button>`)
+        mainBody.innerHTML = `<div style="display: flex; justify-content: center; align-items: center; height: 100vh; flex-direction: column;"><h1>Invalid session ID. please enter new:</h1><div style="flex-direction: row;"><input type="text" id="input"><button type="button" onclick="window.open(window.location.pathname + '?id=' + document.getElementById('input').value, '_self')">Submit</button></div></div>`
         return;
     }
     document.getElementById(page).style.display = "flex";
@@ -43,6 +45,13 @@ async function updatePage() {
     const prevPage = page;
     const response = await sendData({sessionId: sessionId}, "pagePing");
     page = response.page;
+    if (page == "questionEnd") {
+        forceQuestionEnd = false;
+    }
+    if (forceQuestionEnd) {
+        document.getElementById("questionInput").value = "";
+        page = "questionEnd";
+    }
     if (page != prevPage) {
         document.getElementById(prevPage).style.display = "none";
         document.getElementById(page).style.display = "flex";
@@ -78,7 +87,9 @@ async function checkAndSubmit(awnser) {
         return;
     }
     await sendData({ sessionId: sessionId, data: awnser }, "submit");
-
+    forceQuestionEnd = true;
+    document.getElementById(page).style.display = "none";
+    document.getElementById("questionEnd").style.display = "flex";
 }
 
 async function admin() {

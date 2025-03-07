@@ -8,25 +8,26 @@
 
     <script src="networking.js"></script>
 </head>
-<body>
+<body id="mainBody">
     <div id="adminMain">
         <div style="flex-direction: row;">
             <button type="button" onclick="doButton(1)">Setup</button>
             <button type="button" onclick="doButton(2)">Start Question</button>
             <button type="button" onclick="doButton(3)">End Question</button>
+            <p>  </p>
             <button type="button" onclick="doButton(4)">Get Awnsers</button>
             <button type="button" onclick="doButton(5)">Reset Awnsers</button>
         </div>
         <ul id="dynamicList" class="styled-list"></ul>
     </div>
     <div id="adminPassword">
-        <h3>Enter Admin password and session ID:</h3>
+        <h1>Enter Admin password and session ID:</h1>
         <div>
-            <p>session ID: </p>
+            <h2>session ID: </h2>
             <input type="text" id="sesstionIdInput">
         </div>
         <div>
-            <p>password: </p>
+            <h2>password: </h2>
             <input type="password" id="adminInput">
         </div>
         <button type="button" onclick="checkPassword(document.getElementById('adminInput').value, document.getElementById('sesstionIdInput').value)">Submit</button>
@@ -46,7 +47,7 @@
         <h1>
             Waiting for Host to start
         </h1>
-        <img src="https://cdn.pixabay.com/animation/2024/04/02/07/57/07-57-40-974_512.gif" alt="">
+        <img src="images/ezgif.com-animated-gif-maker.gif" alt="">
     </div>
     <div id="questionStart">
         <h2>
@@ -62,7 +63,7 @@
         <h1>
             Wait for next Wikipedia round
         </h1>
-        <img src="https://cdn.pixabay.com/animation/2024/04/02/07/57/07-57-40-974_512.gif" alt="">
+        <img src="images/ezgif.com-animated-gif-maker.gif" alt="">
     </div>
 
     <script src="main.js"></script>

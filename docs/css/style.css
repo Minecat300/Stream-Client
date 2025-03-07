@@ -1,6 +1,42 @@
 body {
     margin: 0px;
-    font-family: 'ComicSans';
+    font-family: 'tahoma2';
+    background-color: #b3d0ff;
+    color: #5697fe;
+    font-weight: bold;
+    -webkit-text-stroke-width: 0vb;
+    -webkit-text-stroke-color: white;
+}
+
+button {
+    font-family: 'tahoma2';
+    color: #5697fe;
+    -webkit-text-stroke-width: 0px;
+    border: #5697fe solid 3px;
+    border-radius: 10px;
+    background-color: white;
+    transition-duration: 0.4s;
+    font-size: large;
+    margin: 10px;
+}
+
+input {
+    font-family: 'tahoma2';
+    color: #5697fe;
+    -webkit-text-stroke-width: 0px;
+    border: #5697fe solid 3px;
+    border-radius: 10px;
+    background-color: white;
+    transition-duration: 0.4s;
+    font-size: large;
+}
+
+input:focus {
+    border: #56fec0 solid 3px;
+}
+
+button:hover {
+    background-color: #b3d0ff;
 }
 
 #main {
@@ -47,7 +83,7 @@ body {
 }
 
 #setup img {
-    height: 100px;
+    height: 150px;
 }
 
 #questionStart {
@@ -56,6 +92,11 @@ body {
     justify-content: center;
     align-items: center;
     height: 100vh;
+}
+
+#questionFeedback {
+    -webkit-text-stroke-width: 0px;
+    color: #fe5656;
 }
 
 #questionEnd {
@@ -67,7 +108,7 @@ body {
 }
 
 #questionEnd img {
-    height: 100px;
+    height: 150px;
 }
 
 @font-face {
@@ -75,3 +116,7 @@ body {
     src: url('fonts/Ldfcomicsans-jj7l.ttf');
 }
 
+@font-face {
+    font-family: tahoma2;
+    src: url('fonts/tahomabd.ttf');
+}
